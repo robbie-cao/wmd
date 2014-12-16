@@ -4,8 +4,8 @@
 #define EINT_OPTIMIZE
 
 /* external interrupt initialization */
-void	EINT_Init(void);
+void    EINT_Init(void);
 /* external interrupt service routine */
-void	EINT_ISR(void);
+void    EINT_ISR(void);
 
 #endif

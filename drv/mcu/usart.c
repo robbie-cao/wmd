@@ -4,7 +4,7 @@
 
 //#define DEBUG
 
-#define USART_RXBUFF_SIZE	4
+#define USART_RXBUFF_SIZE    4
 
 static u8 rx_buff[USART_RXBUFF_SIZE];
 
@@ -36,7 +36,7 @@ void USART_Init(void)
 /* Put one byte to USART to transmit */
 void USART_PutByte(u8 byte)
 {
-    while (!TXIF)	/* set when register is empty */
+    while (!TXIF)    /* set when register is empty */
         continue;
 
     TXREG = byte;
@@ -45,10 +45,10 @@ void USART_PutByte(u8 byte)
 /* Get one byte from USART receiver */
 u8 USART_GetByte(void)
 {
-    while (!RCIF)	/* set when register is not empty */
+    while (!RCIF)    /* set when register is not empty */
         continue;
 
-    return RCREG;	/* RXD9 and FERR are gone now */
+    return RCREG;    /* RXD9 and FERR are gone now */
 }
 
 /* Get the ninth bit */
@@ -57,7 +57,7 @@ u8 USART_GetNinth(void)
     while (!RCIF)
         continue;
 
-    return RX9D;	/* RCIF is not cleared until RCREG is read */
+    return RX9D;    /* RCIF is not cleared until RCREG is read */
 }
 
 /* Get receiving framing error */
@@ -66,13 +66,13 @@ u8 USART_GetFERR(void)
     while (!RCIF)
         continue;
 
-    return FERR;	/* RCIF is not cleared until RCREG is read */
+    return FERR;    /* RCIF is not cleared until RCREG is read */
 }
 
 /* Check receiver overrun error */
 u8 USART_CheckOERR(void)
 {
-    if (OERR)	/* re-enable after overrun error */
+    if (OERR)    /* re-enable after overrun error */
     {
         CREN = 0;
         CREN = 1;
@@ -112,7 +112,7 @@ void USART_Rx_ISR(void)
 void putch(u8 byte)
 {
     /* output one byte */
-    while (!TXIF)	/* set when register is empty */
+    while (!TXIF)    /* set when register is empty */
         continue;
 
     TXREG = byte;
@@ -121,7 +121,7 @@ void putch(u8 byte)
 u8 getch(void)
 {
     /* retrieve one byte */
-    while (!RCIF)	/* set when register is not empty */
+    while (!RCIF)    /* set when register is not empty */
         continue;
 
     return RCREG;
@@ -143,7 +143,7 @@ void puthex(u8 byte)
 
     c = byte >> 4;
 #ifdef USART_OPTIMIZE
-    c +=  (c <= 9) ? '0' : 0x37;	/* 0x37 = 'A' - 0xA */
+    c +=  (c <= 9) ? '0' : 0x37;    /* 0x37 = 'A' - 0xA */
 #else
     c +=  ((c <= 9) ? '0' : ('A' - 0xA));
 #endif
@@ -151,7 +151,7 @@ void puthex(u8 byte)
 
     c = byte & 0xF;
 #ifdef USART_OPTIMIZE
-    c +=  (c <= 9) ? '0' : 0x37;	/* 0x37 = 'A' - 0xA */
+    c +=  (c <= 9) ? '0' : 0x37;    /* 0x37 = 'A' - 0xA */
 #else
     c +=  ((c <= 9) ? '0' : ('A' - 0xA));
 #endif

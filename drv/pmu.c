@@ -15,12 +15,12 @@ void PMU_Init(void)
     u8 i = 0;
 #endif
 
-    TRISA2 = 1;		/* config RA2/INT as input */
-    RABPU = 0;		/* PORTA/B pull-up enable */
-    WPUA2 = 1;		/* RA2 weak pull-up enable */
-    INTEDG = 0;		/* interrupt on falling edge of INT pin */
-    INTE = 1;		/* RA2/INT external interrupt enable */
-    GIE = 1;		/* enable global interrupt */
+    TRISA2 = 1; /* config RA2/INT as input */
+    RABPU = 0;  /* PORTA/B pull-up enable */
+    WPUA2 = 1;  /* RA2 weak pull-up enable */
+    INTEDG = 0; /* interrupt on falling edge of INT pin */
+    INTE = 1;   /* RA2/INT external interrupt enable */
+    GIE = 1;    /* enable global interrupt */
 
 #ifndef DEBUG
     /* config AS7100 interrupt enable bits */

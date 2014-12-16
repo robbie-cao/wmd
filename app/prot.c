@@ -7,7 +7,7 @@
 #include "dc.h"
 #include "version.h"
 
-#define CMD_SIZE		sizeof(Cmd_t)
+#define CMD_SIZE        sizeof(Cmd_t)
 
 /* task entry for protocol cmd */
 void Prot_Cmd_Handler(void)

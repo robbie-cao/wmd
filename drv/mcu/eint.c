@@ -10,29 +10,29 @@
 void EINT_Init(void)
 {
 #ifdef EINT_OPTIMIZE
-    TRISA |= 0x03;	/* config RA0/1 as input */
-    ANSELH = 0x00;	/* config analog chanel as digital input */
-    ANSEL = 0x00;	/* config analog chanel as digital input */
-    RABPU = 0;		/* PORTA/B pull-up enable */
-    WPUA |= 0x03;	/* RA0/1 weak pull-up enable */
-    IOCA |= 0x03;	/* RA0/1 interrupt-on-change enable */
-    RABIE = 1;		/* PORTA/B change interrupt enable */
-    GIE = 1;		/* enable global interrupt */
+    TRISA |= 0x03;   /* config RA0/1 as input */
+    ANSELH = 0x00;   /* config analog chanel as digital input */
+    ANSEL = 0x00;    /* config analog chanel as digital input */
+    RABPU = 0;       /* PORTA/B pull-up enable */
+    WPUA |= 0x03;    /* RA0/1 weak pull-up enable */
+    IOCA |= 0x03;    /* RA0/1 interrupt-on-change enable */
+    RABIE = 1;       /* PORTA/B change interrupt enable */
+    GIE = 1;         /* enable global interrupt */
 #else
-    TRISA0 = 1;		/* config RA0 as input */
-    TRISA1 = 1;		/* config RA1 as input */
+    TRISA0 = 1;      /* config RA0 as input */
+    TRISA1 = 1;      /* config RA1 as input */
 
-    ANSELH = 0x00;	/* config analog chanel as digital input */
-    ANSEL = 0x00;	/* config analog chanel as digital input */
+    ANSELH = 0x00;   /* config analog chanel as digital input */
+    ANSEL = 0x00;    /* config analog chanel as digital input */
 
-    RABPU = 0;		/* PORTA/B pull-up enable */
-    WPUA0 = 1;		/* RA0 weak pull-up enable */
-    WPUA1 = 1;		/* RA1 weak pull-up enable */
+    RABPU = 0;       /* PORTA/B pull-up enable */
+    WPUA0 = 1;       /* RA0 weak pull-up enable */
+    WPUA1 = 1;       /* RA1 weak pull-up enable */
 
-    IOCA0 = 1;		/* RA0 interrupt-on-change enable */
-    IOCA1 = 1;		/* RA1 interrupt-on-change enable */
-    RABIE = 1;		/* PORTA/B change interrupt enable */
-    GIE = 1;		/* enable global interrupt */
+    IOCA0 = 1;       /* RA0 interrupt-on-change enable */
+    IOCA1 = 1;       /* RA1 interrupt-on-change enable */
+    RABIE = 1;       /* PORTA/B change interrupt enable */
+    GIE = 1;         /* enable global interrupt */
 #endif
 }
 
@@ -65,5 +65,5 @@ void EINT_ISR(void)
         Task_Push(RA1 ? MSG_ID_KEYREL_IND : MSG_ID_KEYPR_IND, KPD_ID_B, 0);
         p1 = RA1;
     }
-    RABIF = 0;		/* clear interrupt flag */
+    RABIF = 0;      /* clear interrupt flag */
 }

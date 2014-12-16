@@ -24,11 +24,11 @@ bool PWM_Start(u8 mask, u8 mode, u16 period, u8 hr, u8 lr)
 
     scale = (period >> 8) & 0x0F;
     if (scale < 1) {
-        prescaler = 0b00;		/* 1:1 */
+        prescaler = 0b00;    	/* 1:1 */
     } else if (scale >= 1 && scale < 4) {
-        prescaler = 0b01;		/* 1:4 */
+        prescaler = 0b01;    	/* 1:4 */
     } else {
-        prescaler = 0b10;		/* 1:16 */
+        prescaler = 0b10;    	/* 1:16 */
     }
 
     pr2 = (period >> (prescaler << 1)) - 1;
@@ -36,7 +36,7 @@ bool PWM_Start(u8 mask, u8 mode, u16 period, u8 hr, u8 lr)
 
     /* disable the PWM pin output driver */
     TRISC |= REVERSE_BITS_4(mask & 0x0F) << 2;
-    PR2 = pr2;		/* set the PWM period */
+    PR2 = pr2;    	/* set the PWM period */
     /* configure the CCP module for the PWM mode */
     /*
      * (PWM Output Config) << 6 | (PWM Duty Cycle Least bits) << 4 | (EECP Mode)
@@ -59,7 +59,7 @@ bool PWM_Start(u8 mask, u8 mode, u16 period, u8 hr, u8 lr)
     PSTRCON = (0b1 << 4) | (mask & 0x0F);
 
     /* config and start timer 2 */
-    TMR2IF = 0;		/* clear the TMR2IF interrupt flag */
+    TMR2IF = 0;    	/* clear the TMR2IF interrupt flag */
     TMR2 = 0;
 #if 0
     /* set prescaler */
@@ -70,7 +70,7 @@ bool PWM_Start(u8 mask, u8 mode, u16 period, u8 hr, u8 lr)
     TOUTPS2 = 0;
     TOUTPS1 = 0;
     TOUTPS0 = 0;
-    TMR2ON = 1;		/* enable timer */
+    TMR2ON = 1;    	/* enable timer */
 #else
     /* set the timer2 prescale value and enable timer2 */
     T2CON = (0b0000 << 3) | (0b1 << 2) | prescaler;

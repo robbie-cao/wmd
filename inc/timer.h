@@ -4,15 +4,15 @@
 #include "types.h"
 #include "config.h"
 
-#define TIMER_UNIT_TICK		0
-#define TIMER_UNIT_US		1
-#define TIMER_UNIT_MS		2
-#define TIMER_UNIT_S		3
+#define TIMER_UNIT_TICK     0
+#define TIMER_UNIT_US       1
+#define TIMER_UNIT_MS       2
+#define TIMER_UNIT_S        3
 
 typedef void (*timer_cb_t)(void);
 
 /* Timer 0 initialization */
-void	Timer0_Init(void);
+void    Timer0_Init(void);
 /* Start timer 0 */
 /*
  * Input
@@ -24,14 +24,14 @@ void	Timer0_Init(void);
  *   - 0, success
  *   - other, fail
  */
-s8		Timer0_Start(u16 timeout, u8 msg, u8 parm, bool repeat);
+s8      Timer0_Start(u16 timeout, u8 msg, u8 parm, bool repeat);
 /* Stop timer 0 */
-s8		Timer0_Stop(void);
+s8      Timer0_Stop(void);
 /* Timer 0 interrupt service routine */
-void	Timer0_ISR(void);
+void    Timer0_ISR(void);
 
 /* Timer 1 initialization */
-void	Timer1_Init(void);
+void    Timer1_Init(void);
 /* Start timer 1 */
 /*
  * Input
@@ -43,14 +43,14 @@ void	Timer1_Init(void);
  *   - 0, success
  *   - other, fail
  */
-s8		Timer1_Start(u32 timeout, u8 msg, u8 parm, bool repeat);
+s8      Timer1_Start(u32 timeout, u8 msg, u8 parm, bool repeat);
 /* Stop timer 1 */
-s8		Timer1_Stop(void);
+s8      Timer1_Stop(void);
 /* Timer 1 interrupt service routine */
-void	Timer1_ISR(void);
+void    Timer1_ISR(void);
 
 /* Timer 2 initialization */
-void	Timer2_Init(void);
+void    Timer2_Init(void);
 /* Start timer 2 */
 /*
  * Input
@@ -62,10 +62,10 @@ void	Timer2_Init(void);
  *   - 0, success
  *   - other, fail
  */
-s8		Timer2_Start(u32 timeout, u8 msg, u8 parm, bool repeat);
+s8      Timer2_Start(u32 timeout, u8 msg, u8 parm, bool repeat);
 /* Stop timer 2 */
-s8		Timer2_Stop(void);
+s8      Timer2_Stop(void);
 /* Timer 2 interrupt service routine */
-void	Timer2_ISR(void);
+void    Timer2_ISR(void);
 
 #endif /* __TIMER_H__ */
