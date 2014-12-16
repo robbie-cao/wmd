@@ -13,31 +13,31 @@
 #define TASK_OK			0
 
 enum {
-	MSG_ID_CMDRCV_IND,
-	MSG_ID_SAMP_IND,
-	MSG_ID_DC_IND,
-	MSG_ID_PMU_IND,
-	MSG_ID_BATT_IND,
-	MSG_ID_KEYPR_IND,
-	MSG_ID_KEYREL_IND,
-	MSG_ID_KEYLP_IND,
-	MSG_ID_LED_FLASH,
+    MSG_ID_CMDRCV_IND,
+    MSG_ID_SAMP_IND,
+    MSG_ID_DC_IND,
+    MSG_ID_PMU_IND,
+    MSG_ID_BATT_IND,
+    MSG_ID_KEYPR_IND,
+    MSG_ID_KEYREL_IND,
+    MSG_ID_KEYLP_IND,
+    MSG_ID_LED_FLASH,
 
-	MSG_ID_TOTAL
+    MSG_ID_TOTAL
 };
 
-typedef struct 
+typedef struct
 {
-	u8	id;
-	u8	parm1;
-	u16	parm2;
+    u8	id;
+    u8	parm1;
+    u16	parm2;
 } task_msg_t;
 
-typedef struct 
+typedef struct
 {
-	task_msg_t	msgs[QSIZE];
-	u8			front;
-	u8			rear;
+    task_msg_t	msgs[QSIZE];
+    u8			front;
+    u8			rear;
 } task_queue_t;
 
 typedef void (*task_func_t)(void);
@@ -64,18 +64,18 @@ s8		Task_GetCurrent(void);
 #else
 
 #define Task_Push(msg_id, _parm1, _parm2)		\
-	((q.rear + 1) & QSIZE_MASK == q.front) ?	\
-	TASK_ERROR :								\
-	((q.msgs[q.rear].id = (msg_id)), 			\
-	 (q.msgs[q.rear].parm1 = (_parm1)), 		\
-	 (q.msgs[q.rear].parm2 = (_parm2)), 		\
-	 (q.rear = (q.rear + 1) & QSIZE_MASK) 		\
-	)
+    ((q.rear + 1) & QSIZE_MASK == q.front) ?	\
+TASK_ERROR :								\
+((q.msgs[q.rear].id = (msg_id)), 			\
+ (q.msgs[q.rear].parm1 = (_parm1)), 		\
+ (q.msgs[q.rear].parm2 = (_parm2)), 		\
+ (q.rear = (q.rear + 1) & QSIZE_MASK) 		\
+)
 
 #define Task_GetCurrent()			\
-	(q.front == q.rear) ? 			\
-	TASK_ERROR : 					\
-	q.msgs[q.front].id
+    (q.front == q.rear) ? 			\
+TASK_ERROR : 					\
+q.msgs[q.front].id
 
 #endif
 
@@ -90,10 +90,10 @@ s8		Task_Pop(void);
 
 /* Execut the task */
 #define Task_Run(msg_id)			\
-	do {							\
-		if (funcs[msg_id]) {		\
-			funcs[msg_id]();		\
-		}							\
-	} while (0)
+    do {							\
+        if (funcs[msg_id]) {		\
+            funcs[msg_id]();		\
+        }							\
+    } while (0)
 
 #endif

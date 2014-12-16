@@ -33,14 +33,14 @@
 #endif
 
 #if defined(_16F87) || defined(_16F88)
-	#define RX_PIN	TRISB2
-	#define TX_PIN	TRISB5
+#define RX_PIN	TRISB2
+#define TX_PIN	TRISB5
 #elif defined(_16F687) || defined(_16F689)|| defined(_16F690)
-	#define RX_PIN	TRISB5
-	#define TX_PIN	TRISB7
+#define RX_PIN	TRISB5
+#define TX_PIN	TRISB7
 #else
-	#define RX_PIN	TRISC7
-	#define TX_PIN	TRISC6
+#define RX_PIN	TRISC7
+#define TX_PIN	TRISC6
 #endif
 
 /* USART module initialization */

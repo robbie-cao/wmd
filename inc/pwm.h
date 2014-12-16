@@ -31,7 +31,7 @@
  * PR2 = Tpwm_us / (IPERIOD * TMR2_Prescaler) - 1
  */
 
-/* 
+/*
  * Duty = (CCPR1L:CCP1CON<5:4>) / (4* (PR2 + 1))
  * Duty = [0 ~ 100%]
  * ==>
@@ -47,7 +47,7 @@ void	PWM_Init(void);
 /*
  * Input
  *   - mask  : bit 0 - P1A, bit 1 - P1B, bit 2 - P1C, bit 3 - P1D
- *   - mode  : pwm mode 
+ *   - mode  : pwm mode
  *   - period: PWM period in us
  *   - hr    : Pulse high(duty cycle)
  *   - lr    : Pulse low(duty free)

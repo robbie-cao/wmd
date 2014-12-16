@@ -9,30 +9,30 @@
 
 void Batt_StatusHandler(void)
 {
-	if (MSG_PARM1 & PMU_INT_POWON) {
-		/* power on */
+    if (MSG_PARM1 & PMU_INT_POWON) {
+        /* power on */
 #ifdef DEBUG
-		putstr((u8 *)"Power On\r");
+        putstr((u8 *)"Power On\r");
 #endif
-	}
-	if (MSG_PARM1 & PMU_INT_POWOFF) {
-		/* power off */
+    }
+    if (MSG_PARM1 & PMU_INT_POWOFF) {
+        /* power off */
 #ifdef DEBUG
-		putstr((u8 *)"Power Off\r");
+        putstr((u8 *)"Power Off\r");
 #endif
-	}
-	if (MSG_PARM1 & PMU_INT_LVDSTATE) {
-		/* low voltage */
+    }
+    if (MSG_PARM1 & PMU_INT_LVDSTATE) {
+        /* low voltage */
 #ifdef DEBUG
-		putstr((u8 *)"Low Voltage\r");
+        putstr((u8 *)"Low Voltage\r");
 #endif
-		LED_On(LED_BATT);
-	}
-	if (MSG_PARM1 & PMU_INT_OPTSTATE) {
-		/* temperature run away */
+        LED_On(LED_BATT);
+    }
+    if (MSG_PARM1 & PMU_INT_OPTSTATE) {
+        /* temperature run away */
 #ifdef DEBUG
-		putstr((u8 *)"Temperature run away\r");
+        putstr((u8 *)"Temperature run away\r");
 #endif
-		LED_Flash(LED_BATT);
-	}
+        LED_Flash(LED_BATT);
+    }
 }

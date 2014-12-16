@@ -44,15 +44,15 @@ s8		AccSensor_GetData(u8* reg, u16 *ax, u16 *ay, u16 *az);
 
 /* Power up sensor */
 #define AccSensor_PwrUp()			\
-	I2C_WriteTo(SENSOR_ADDR),		\
-	I2C_PutByte(SENSOR_INTL_REG),	\
-	I2C_PutByte(SENSOR_CMD_PWRUP)
+    I2C_WriteTo(SENSOR_ADDR),		\
+I2C_PutByte(SENSOR_INTL_REG),	\
+I2C_PutByte(SENSOR_CMD_PWRUP)
 
 /* Power down senor */
 #define AccSensor_PwrDn()			\
-	I2C_WriteTo(SENSOR_ADDR),		\
-	I2C_PutByte(SENSOR_INTL_REG),	\
-	I2C_PutByte(SENSOR_CMD_PWRDN)
+    I2C_WriteTo(SENSOR_ADDR),		\
+I2C_PutByte(SENSOR_INTL_REG),	\
+I2C_PutByte(SENSOR_CMD_PWRDN)
 
 /* Make senor enter sleep mode */
 #define AccSensor_Sleep	AccSensor_PwrDn
@@ -60,39 +60,39 @@ s8		AccSensor_GetData(u8* reg, u16 *ax, u16 *ay, u16 *az);
 #ifndef SENSOR_HIDE_FEAT
 /* Sensor self-test*/
 #define AccSensor_SelfTest()		\
-	I2C_WriteTo(SENSOR_ADDR),		\
-	I2C_PutByte(SENSOR_INTL_REG),	\
-	I2C_PutByte(SENSOR_CMD_ST)
+    I2C_WriteTo(SENSOR_ADDR),		\
+I2C_PutByte(SENSOR_INTL_REG),	\
+I2C_PutByte(SENSOR_CMD_ST)
 
 /* Sensor bandgap test */
 #define AccSensor_BGTest()			\
-	I2C_WriteTo(SENSOR_ADDR),		\
-	I2C_PutByte(SENSOR_INTL_REG),	\
-	I2C_PutByte(SENSOR_CMD_BGTST)
+    I2C_WriteTo(SENSOR_ADDR),		\
+I2C_PutByte(SENSOR_INTL_REG),	\
+I2C_PutByte(SENSOR_CMD_BGTST)
 
 /* Senor temperature out enable */
 #define AccSensor_TOEN()			\
-	I2C_WriteTo(SENSOR_ADDR),		\
-	I2C_PutByte(SENSOR_INTL_REG),	\
-	I2C_PutByte(SENSOR_CMD_TOEN)
+    I2C_WriteTo(SENSOR_ADDR),		\
+I2C_PutByte(SENSOR_INTL_REG),	\
+I2C_PutByte(SENSOR_CMD_TOEN)
 #endif
 
 
 /* Get acceleration data from sensor */
 #define AccSensor_GetData(reg, ax, ay, az)	{	\
-	u8 data[5];									\
-	I2C_WriteTo(SENSOR_ADDR);					\
-	I2C_PutByte(SENSOR_INTL_REG);				\
-	I2C_ReadFrom(SENSOR_ADDR);					\
-	data[0] = I2C_GetByte(I2C_MORE);			\
-	data[1] = I2C_GetByte(I2C_MORE);			\
-	data[2] = I2C_GetByte(I2C_MORE);			\
-	data[3] = I2C_GetByte(I2C_MORE);			\
-	data[4] = I2C_GetByte(I2C_LAST);			\
-	*reg = data[0];								\
-	*ax = data[1] << 8 | data[2];				\
-	*ay = data[3] << 8 | data[4];				\
-	*az = 0;									\
+    u8 data[5];									\
+    I2C_WriteTo(SENSOR_ADDR);					\
+    I2C_PutByte(SENSOR_INTL_REG);				\
+    I2C_ReadFrom(SENSOR_ADDR);					\
+    data[0] = I2C_GetByte(I2C_MORE);			\
+    data[1] = I2C_GetByte(I2C_MORE);			\
+    data[2] = I2C_GetByte(I2C_MORE);			\
+    data[3] = I2C_GetByte(I2C_MORE);			\
+    data[4] = I2C_GetByte(I2C_LAST);			\
+    *reg = data[0];								\
+    *ax = data[1] << 8 | data[2];				\
+    *ay = data[3] << 8 | data[4];				\
+    *az = 0;									\
 }
 
 #endif

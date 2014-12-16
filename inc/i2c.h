@@ -8,13 +8,13 @@
 
 /*
  *	SDA (data) and SCL (clock) bits
- *	
+ *
  *	Special note!!!
- *	
+ *
  *	If the clock and data lines are in the same port, you will need
  *	to beware of the Read/Modify/Write issue in the PIC - since
  *	a bit set or clear on any one bit in a port will read and write
- *	back all other bits. 
+ *	back all other bits.
  */
 
 /* Uncomment the next line to use the PIC's SSP Module*/

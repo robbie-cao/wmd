@@ -5,13 +5,13 @@
 #include "sensor.h"
 
 typedef struct {
-	u8  id;
-	u8  parm;
+    u8  id;
+    u8  parm;
 } Cmd_t;
 
 typedef struct {
-	u8	id;
-	u8	ack;
+    u8	id;
+    u8	ack;
 } Resp_t;
 
 #define CMD_ID_SYS_VERSION		0x20
@@ -40,11 +40,11 @@ typedef struct {
 #define ACC_DTAT_HEADER			0x55
 
 typedef struct {
-	u8 header;
-	u8 intv;
-	u16 ax;
-	u16 ay;
-	u16 az;
+    u8 header;
+    u8 intv;
+    u16 ax;
+    u16 ay;
+    u16 az;
 } AccData_t;
 
 /* task entry for protocol cmd */

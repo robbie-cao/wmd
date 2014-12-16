@@ -12,22 +12,22 @@
 void I2C_Init(void)
 {
 #ifdef I2C_OPTIMIZE
-	SCL = 0; SDA = 0;		/* set SDA & SCL to zero. from now on, simply play with tris */
-	SCL_DIR = I2C_OUTPUT;	/* set SCL line to an OUPUT */
-	SDA_DIR = I2C_INPUT;	/* set SDA line to an INPUT just to be sure! */
+    SCL = 0; SDA = 0;		/* set SDA & SCL to zero. from now on, simply play with tris */
+    SCL_DIR = I2C_OUTPUT;	/* set SCL line to an OUPUT */
+    SDA_DIR = I2C_INPUT;	/* set SDA line to an INPUT just to be sure! */
 
-	SSPSTAT = 0;			/* make sure SMP and CKE bits be maintained clear */
-	SSPCON = 0x20 | I2C_MASTER;	/* config ssp to i2c master mode and enable ssp */
+    SSPSTAT = 0;			/* make sure SMP and CKE bits be maintained clear */
+    SSPCON = 0x20 | I2C_MASTER;	/* config ssp to i2c master mode and enable ssp */
 #else
-	SMP = 0;				/* make sure this bit be maintained clear */
-	CKE = 0;				/* make sure this bit be maintained clear */
-	SSPMODE(I2C_MASTER);	/* config ssp to i2c master mode */
+    SMP = 0;				/* make sure this bit be maintained clear */
+    CKE = 0;				/* make sure this bit be maintained clear */
+    SSPMODE(I2C_MASTER);	/* config ssp to i2c master mode */
 
-	SCL = 0; SDA = 0;		/* set SDA & SCL to zero. from now on, simply play with tris */
-	SCL_DIR = I2C_OUTPUT;	/* set SCL line to an OUPUT */
-	SDA_DIR = I2C_INPUT;	/* set SDA line to an INPUT just to be sure! */
+    SCL = 0; SDA = 0;		/* set SDA & SCL to zero. from now on, simply play with tris */
+    SCL_DIR = I2C_OUTPUT;	/* set SCL line to an OUPUT */
+    SDA_DIR = I2C_INPUT;	/* set SDA line to an INPUT just to be sure! */
 
-	SSPEN = 1;				/* synchronous serial port enable */
+    SSPEN = 1;				/* synchronous serial port enable */
 #endif
 }
 
@@ -37,16 +37,16 @@ void I2C_Init(void)
  */
 void I2C_Stop(void)
 {
-	/* don't assume SCL is high on entry */
-	SDA_LOW();					/* ensure data is low first */
-	SCL_HIGH();
-	
-	__delay_us(I2C_TM_DATA_SU);
-	SCL_DIR = I2C_INPUT;		/* float clock high */
-	__delay_us(I2C_TM_STOP_SU);
-	SDA_HIGH();					/* the low->high data transistion */
-	__delay_us(I2C_TM_BUS_FREE);/* bus free time before next start */
-	SDA_DIR = I2C_INPUT;		/* float data high */
+    /* don't assume SCL is high on entry */
+    SDA_LOW();					/* ensure data is low first */
+    SCL_HIGH();
+
+    __delay_us(I2C_TM_DATA_SU);
+    SCL_DIR = I2C_INPUT;		/* float clock high */
+    __delay_us(I2C_TM_STOP_SU);
+    SDA_HIGH();					/* the low->high data transistion */
+    __delay_us(I2C_TM_BUS_FREE);/* bus free time before next start */
+    SDA_DIR = I2C_INPUT;		/* float data high */
 }
 
 /*
@@ -56,16 +56,16 @@ void I2C_Stop(void)
  */
 void I2C_Restart(void)
 {
-	SCL_LOW();					/* ensure clock is low */
-	SDA_HIGH();					/* ensure data is high */
+    SCL_LOW();					/* ensure clock is low */
+    SDA_HIGH();					/* ensure data is high */
 
-	__delay_us(I2C_TM_DATA_SU);
+    __delay_us(I2C_TM_DATA_SU);
 
-	SCL_DIR = I2C_INPUT;		/* clock pulse high */
-	__delay_us(I2C_TM_SCL_HIGH);
+    SCL_DIR = I2C_INPUT;		/* clock pulse high */
+    __delay_us(I2C_TM_SCL_HIGH);
 
-	SDA_LOW();					/* the high->low transition */
-	__delay_us(I2C_TM_START_HD);
+    SDA_LOW();					/* the high->low transition */
+    __delay_us(I2C_TM_START_HD);
 }
 
 /*
@@ -74,29 +74,29 @@ void I2C_Restart(void)
  */
 u8 I2C_SendByte(u8 byte)
 {
-	s8 i;
+    s8 i;
 
-	for (i = 7; i >= 0; i--) {
-		SCL_LOW();					/* drive clock low */
-		
-		/* data hold time = 0, send data now */
+    for (i = 7; i >= 0; i--) {
+        SCL_LOW();					/* drive clock low */
+
+        /* data hold time = 0, send data now */
         SDA_DIR = ((byte >> i) & 0x01);
         if ((byte >> i) & 0x01) {	/* bit to send */
-			SDA_HIGH();
+            SDA_HIGH();
         } else {
-			SDA_LOW();
+            SDA_LOW();
         }
-		__delay_us(I2C_TM_DATA_SU);
-		SCL_DIR = I2C_INPUT;		/* float clock high */
+        __delay_us(I2C_TM_DATA_SU);
+        SCL_DIR = I2C_INPUT;		/* float clock high */
 
-		if (I2C_WaitForSCL()) {		/* wait for clock release */
-			return I2C_ERROR;		/* bus error */
-		}
+        if (I2C_WaitForSCL()) {		/* wait for clock release */
+            return I2C_ERROR;		/* bus error */
+        }
 
-		__delay_us(I2C_TM_SCL_HIGH);/* clock high time */
-	}
-	
-	return I2C_OK;
+        __delay_us(I2C_TM_SCL_HIGH);/* clock high time */
+    }
+
+    return I2C_OK;
 }
 
 /*
@@ -105,21 +105,21 @@ u8 I2C_SendByte(u8 byte)
  */
 s8 I2C_ReadAcknowledge(void)
 {
-	u8 ack;
+    u8 ack;
 
-	SCL_LOW();						/* make clock is low */
-	SDA_DIR = I2C_INPUT;			/* disable data line - listen for ack */
-	__delay_us(I2C_TM_SCL_TO_DATA);	/* SCL low to data out valid */
-	SCL_DIR = I2C_INPUT;			/* float clock high */
-	__delay_us(I2C_TM_DATA_SU);
-	ack = SDA;						/* read the acknowledge */
+    SCL_LOW();						/* make clock is low */
+    SDA_DIR = I2C_INPUT;			/* disable data line - listen for ack */
+    __delay_us(I2C_TM_SCL_TO_DATA);	/* SCL low to data out valid */
+    SCL_DIR = I2C_INPUT;			/* float clock high */
+    __delay_us(I2C_TM_DATA_SU);
+    ack = SDA;						/* read the acknowledge */
 
-	/* wait for slave to release clock line after processing byte */
-	if (I2C_WaitForSCL()) {
-		return I2C_ERROR;
-	}
+    /* wait for slave to release clock line after processing byte */
+    if (I2C_WaitForSCL()) {
+        return I2C_ERROR;
+    }
 
-	return ack;
+    return ack;
 }
 
 /*
@@ -128,24 +128,24 @@ s8 I2C_ReadAcknowledge(void)
  */
 s16 I2C_ReadByte(void)
 {
-	s8 i;
-	u8 byte = 0;
+    s8 i;
+    u8 byte = 0;
 
-	for (i = 7; i >= 0; i--) {
-		SCL_LOW();					/* drive clock low */
-		__delay_us(I2C_TM_SCL_LOW);	/* min clock low  period */
-		SDA_DIR = I2C_INPUT;		/* release data line */
+    for (i = 7; i >= 0; i--) {
+        SCL_LOW();					/* drive clock low */
+        __delay_us(I2C_TM_SCL_LOW);	/* min clock low  period */
+        SDA_DIR = I2C_INPUT;		/* release data line */
 
-		SCL_DIR = I2C_INPUT;		/* float clock high */
-		if (I2C_WaitForSCL()) {
-			return I2C_ERROR;
-		}
-		__delay_us(I2C_TM_SCL_HIGH);
-		byte = byte << 1;			/* read the next bit */
-		byte |= SDA;
-	}
+        SCL_DIR = I2C_INPUT;		/* float clock high */
+        if (I2C_WaitForSCL()) {
+            return I2C_ERROR;
+        }
+        __delay_us(I2C_TM_SCL_HIGH);
+        byte = byte << 1;			/* read the next bit */
+        byte |= SDA;
+    }
 
-	return (s16)byte;
+    return (s16)byte;
 }
 
 /*
@@ -154,15 +154,15 @@ s16 I2C_ReadByte(void)
  */
 void I2C_SendAcknowledge(u8 status)
 {
-	SCL_LOW();
-	if (status & 0x01) {
-		SDA_LOW();					/* drive line low -> more to come */
-	} else { 
-		SDA_HIGH();
-	}
-	__delay_us(I2C_TM_DATA_SU);
-	SCL_DIR = I2C_INPUT;			/* float clock high */
-	__delay_us(I2C_TM_SCL_HIGH);
+    SCL_LOW();
+    if (status & 0x01) {
+        SDA_LOW();					/* drive line low -> more to come */
+    } else {
+        SDA_HIGH();
+    }
+    __delay_us(I2C_TM_DATA_SU);
+    SCL_DIR = I2C_INPUT;			/* float clock high */
+    __delay_us(I2C_TM_SCL_HIGH);
 }
 
 /*
@@ -171,11 +171,11 @@ void I2C_SendAcknowledge(u8 status)
  */
 s8 I2C_PutByte(u8 data)
 {
-	if (I2C_SendByte(data)) {
-		return I2C_ERROR;
-	}
+    if (I2C_SendByte(data)) {
+        return I2C_ERROR;
+    }
 
-	return I2C_ReadAcknowledge();	/* returns ack, ~ack or I2C_ERROR*/
+    return I2C_ReadAcknowledge();	/* returns ack, ~ack or I2C_ERROR*/
 }
 
 /*
@@ -184,15 +184,15 @@ s8 I2C_PutByte(u8 data)
  */
 s16 I2C_GetByte(u8 more)
 {
-	s16 byte = I2C_ReadByte();
+    s16 byte = I2C_ReadByte();
 
-	if (byte == I2C_ERROR) {
-		return I2C_ERROR;
-	}
+    if (byte == I2C_ERROR) {
+        return I2C_ERROR;
+    }
 
-	I2C_SendAcknowledge(more);
+    I2C_SendAcknowledge(more);
 
-	return byte;
+    return byte;
 }
 
 /*
@@ -201,28 +201,28 @@ s16 I2C_GetByte(u8 more)
  */
 s16 I2C_PutString(const u8 *str, u8 length)
 {
-	s8 error;
+    s8 error;
 
-	while (length) {
-		error = I2C_PutByte(*str);
+    while (length) {
+        error = I2C_PutByte(*str);
 #ifdef I2C_OPTIMIZE
-		if (error) {
-			return (error < 0) ? (-(s16)length) : ((s16)length);
-		}
+        if (error) {
+            return (error < 0) ? (-(s16)length) : ((s16)length);
+        }
 #else
-		if (error == I2C_ERROR) {
-			return -(s16)length;		/* bus error */
-		} else {
-			if (error) {
-				return (s16)length;		/* non acknowledge */
-			}
-		}
+        if (error == I2C_ERROR) {
+            return -(s16)length;		/* bus error */
+        } else {
+            if (error) {
+                return (s16)length;		/* non acknowledge */
+            }
+        }
 #endif
-		str++;
-		length--;
-	}
+        str++;
+        length--;
+    }
 
-	return I2C_OK;						/* everything OK */
+    return I2C_OK;						/* everything OK */
 }
 
 /*
@@ -231,20 +231,20 @@ s16 I2C_PutString(const u8 *str, u8 length)
  */
 u8 I2C_GetString(u8 *str, u8 number)
 {
-	s16 byte;
+    s16 byte;
 
-	while (number) {
-		byte = I2C_GetByte(number - 1);
-		if (byte == I2C_ERROR) {
-			return number;				/* bus error */
-		} else {
-			*str = (u8)byte;
-		}
-		str++;
-		number--;
-	}
+    while (number) {
+        byte = I2C_GetByte(number - 1);
+        if (byte == I2C_ERROR) {
+            return number;				/* bus error */
+        } else {
+            *str = (u8)byte;
+        }
+        str++;
+        number--;
+    }
 
-	return I2C_OK;						/* everything OK */
+    return I2C_OK;						/* everything OK */
 }
 
 /*
@@ -254,10 +254,10 @@ u8 I2C_GetString(u8 *str, u8 number)
  */
 u8 I2C_Open(u8 address, u8 mode)
 {
-	I2C_Start();
-	I2C_SendAddress(address, mode);
+    I2C_Start();
+    I2C_SendAddress(address, mode);
 
-	return I2C_ReadAcknowledge();	/* returns ack, ~ack or I2C_ERROR*/
+    return I2C_ReadAcknowledge();	/* returns ack, ~ack or I2C_ERROR*/
 }
 
 /*
@@ -267,14 +267,14 @@ u8 I2C_Open(u8 address, u8 mode)
  */
 u8 I2C_WaitForSCL(void)
 {
-	/* SCL_DIR should be input here */
-	if (!SCL) {
-		__delay_us(I2C_TM_SCL_TMO);
-		/* if the clock is still low -> bus error */
-		if (!SCL) {
-			return I2C_ERROR;
-		}
-	}
+    /* SCL_DIR should be input here */
+    if (!SCL) {
+        __delay_us(I2C_TM_SCL_TMO);
+        /* if the clock is still low -> bus error */
+        if (!SCL) {
+            return I2C_ERROR;
+        }
+    }
 
-	return I2C_OK;
+    return I2C_OK;
 }
