@@ -55,15 +55,15 @@ s8 AccSensor_GetData(u8* reg, u16 *ax, u16 *ay, u16 *az)
 {
     u8 data[5];
 
-    I2C_WriteTo(SENSOR_ADDR);			/* talk to device 0010000w */
-    I2C_PutByte(SENSOR_INTL_REG);		/* starting address to be read */
+    I2C_WriteTo(SENSOR_ADDR);        /* talk to device 0010000w */
+    I2C_PutByte(SENSOR_INTL_REG);    /* starting address to be read */
 
-    I2C_ReadFrom(SENSOR_ADDR);			/* talk to device 0010000r */
-    data[0] = I2C_GetByte(I2C_MORE);	/* read one byte */
-    data[1] = I2C_GetByte(I2C_MORE);	/* read another */
-    data[2] = I2C_GetByte(I2C_MORE);	/* read another */
-    data[3] = I2C_GetByte(I2C_MORE);	/* read another */
-    data[4] = I2C_GetByte(I2C_LAST);	/* read last */
+    I2C_ReadFrom(SENSOR_ADDR);       /* talk to device 0010000r */
+    data[0] = I2C_GetByte(I2C_MORE); /* read one byte */
+    data[1] = I2C_GetByte(I2C_MORE); /* read another */
+    data[2] = I2C_GetByte(I2C_MORE); /* read another */
+    data[3] = I2C_GetByte(I2C_MORE); /* read another */
+    data[4] = I2C_GetByte(I2C_LAST); /* read last */
 
     *reg = data[0];
     *ax = data[1] << 8 | data[2];
