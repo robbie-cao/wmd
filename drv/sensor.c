@@ -11,42 +11,42 @@ void AccSensor_Init(void)
 /* Power up sensor */
 void AccSensor_PwrUp(void)
 {
-    I2C_WriteTo(SENSOR_ADDR);		/* talk to device 0010000w */
-    I2C_PutByte(SENSOR_INTL_REG);	/* internal address to be written into */
-    I2C_PutByte(SENSOR_CMD_PWRUP);	/* wake up call */
+    I2C_WriteTo(SENSOR_ADDR);      /* talk to device 0010000w */
+    I2C_PutByte(SENSOR_INTL_REG);  /* internal address to be written into */
+    I2C_PutByte(SENSOR_CMD_PWRUP); /* wake up call */
 }
 
 /* Power down senor */
 void AccSensor_PwrDn(void)
 {
-    I2C_WriteTo(SENSOR_ADDR);		/* talk to device 0010000w */
-    I2C_PutByte(SENSOR_INTL_REG);	/* internal address to be written into */
-    I2C_PutByte(SENSOR_CMD_PWRDN);	/* power down call */
+    I2C_WriteTo(SENSOR_ADDR);      /* talk to device 0010000w */
+    I2C_PutByte(SENSOR_INTL_REG);  /* internal address to be written into */
+    I2C_PutByte(SENSOR_CMD_PWRDN); /* power down call */
 }
 
 #ifndef SENSOR_HIDE_FEAT
 /* Sensor self-test*/
 void AccSensor_SelfTest(void)
 {
-    I2C_WriteTo(SENSOR_ADDR);		/* talk to device 0010000w */
-    I2C_PutByte(SENSOR_INTL_REG);	/* internal address to be written into */
-    I2C_PutByte(SENSOR_CMD_ST);		/* self-test call */
+    I2C_WriteTo(SENSOR_ADDR);     /* talk to device 0010000w */
+    I2C_PutByte(SENSOR_INTL_REG); /* internal address to be written into */
+    I2C_PutByte(SENSOR_CMD_ST);   /* self-test call */
 }
 
 /* Sensor bandgap test */
 void AccSensor_BGTest(void)
 {
-    I2C_WriteTo(SENSOR_ADDR);		/* talk to device 0010000w */
-    I2C_PutByte(SENSOR_INTL_REG);	/* internal address to be written into */
-    I2C_PutByte(SENSOR_CMD_BGTST);	/* bandgap test call */
+    I2C_WriteTo(SENSOR_ADDR);      /* talk to device 0010000w */
+    I2C_PutByte(SENSOR_INTL_REG);  /* internal address to be written into */
+    I2C_PutByte(SENSOR_CMD_BGTST); /* bandgap test call */
 }
 
 /* Senor temperature out enable */
 void AccSensor_TOEN(void)
 {
-    I2C_WriteTo(SENSOR_ADDR);		/* talk to device 0010000w */
-    I2C_PutByte(SENSOR_INTL_REG);	/* internal address to be written into */
-    I2C_PutByte(SENSOR_CMD_TOEN);	/* TOEN call */
+    I2C_WriteTo(SENSOR_ADDR);     /* talk to device 0010000w */
+    I2C_PutByte(SENSOR_INTL_REG); /* internal address to be written into */
+    I2C_PutByte(SENSOR_CMD_TOEN); /* TOEN call */
 }
 #endif
 
